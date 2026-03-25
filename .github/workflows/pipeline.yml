@@ -39,23 +39,18 @@ jobs:
           from pathlib import Path
           import mlflow
 
-          tracking_uri = os.environ.get("MLFLOW_TRACKING_URI")
+          tracking_uri = os.environ.get("MLFLOW_TRACKING_URI", "file:./mlruns")
           mlflow.set_tracking_uri(tracking_uri)
 
+          experiment_name = "Assignment3_Muhammad Kamal"
           client = mlflow.tracking.MlflowClient()
-          experiments = client.search_experiments()
 
-          target = None
-          for exp in experiments:
-              if exp.name == "Assignment3_Muhammad-Kamal":
-                  target = exp
-                  break
-
-          if target is None:
-              raise RuntimeError("Experiment not found in local MLflow store.")
+          exp = client.get_experiment_by_name(experiment_name)
+          if exp is None:
+              raise RuntimeError(f"Experiment not found: {experiment_name}")
 
           runs = client.search_runs(
-              experiment_ids=[target.experiment_id],
+              experiment_ids=[exp.experiment_id],
               order_by=["attributes.start_time DESC"],
               max_results=1
           )
