@@ -1,10 +1,17 @@
 from pathlib import Path
 import sys
+import os
 import mlflow
 
 THRESHOLD = 0.85
 
+tracking_uri = os.environ.get("MLFLOW_TRACKING_URI", "file:./mlruns")
+mlflow.set_tracking_uri(tracking_uri)
+
 run_id = Path("model_info.txt").read_text().strip()
+if not run_id:
+    raise RuntimeError("model_info.txt is empty")
+
 client = mlflow.tracking.MlflowClient()
 run = client.get_run(run_id)
 
@@ -16,7 +23,7 @@ print("Run ID:", run_id)
 print("Validation accuracy:", accuracy)
 
 if accuracy < THRESHOLD:
-    print("Threshold check failed")
+    print(f"Threshold check failed: {accuracy:.4f} < {THRESHOLD}")
     sys.exit(1)
 
-print("Threshold check passed")
+print(f"Threshold check passed: {accuracy:.4f} >= {THRESHOLD}")
