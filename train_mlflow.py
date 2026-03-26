@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import argparse
 import os
 import time
@@ -326,5 +325,4 @@ def main():
 
 
 if __name__ == "__main__":
->>>>>>> c6b3f959c497327714439fdbb3fca8254bf369c3
     main()
