@@ -24,7 +24,7 @@ jobs:
           pip install dvc mlflow torch torchvision
 
       - name: Pull data with DVC
-        run: echo "Skipping dvc pull because this repo is not initialized as a DVC repository"
+        run: dvc pull
 
       - name: Set local MLflow tracking URI
         run: echo "MLFLOW_TRACKING_URI=file:./mlruns" >> $GITHUB_ENV
