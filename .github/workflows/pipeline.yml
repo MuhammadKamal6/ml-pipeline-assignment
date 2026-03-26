@@ -30,7 +30,7 @@ jobs:
         run: echo "MLFLOW_TRACKING_URI=file:./mlruns" >> $GITHUB_ENV
 
       - name: Train model and log to MLflow
-        run: python train_mlflow.py
+        run: python train_mlflow.py --epochs 1
 
       - name: Export MLflow Run ID
         run: |
