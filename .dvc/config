@@ -1,0 +1,4 @@
+[core]
+    remote = storage
+['remote "storage"']
+    url = C:\Users\HP Zbook 17 G6\Desktop\dvc_storage
