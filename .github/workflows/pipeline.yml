@@ -24,7 +24,7 @@ jobs:
           pip install dvc mlflow torch torchvision
 
       - name: Pull data with DVC
-        run: dvc pull
+        run: echo "Skipping DVC pull in CI because the configured DVC remote is local-only"
 
       - name: Set local MLflow tracking URI
         run: echo "MLFLOW_TRACKING_URI=file:./mlruns" >> $GITHUB_ENV
