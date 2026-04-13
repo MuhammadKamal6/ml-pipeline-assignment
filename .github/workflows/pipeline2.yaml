@@ -3,8 +3,7 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - main
-      - "**"
+      - '**'
   pull_request:
 
 jobs:
@@ -27,7 +26,7 @@ jobs:
 
       - name: Run linter
         run: |
-          flake8 .
+          flake8 . --exclude=.dvc,__pycache__ --max-line-length=120
 
   train:
     needs: linter
@@ -46,14 +45,14 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: Install training dependencies
+      - name: Install project dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt || true
+          pip install -r requirements.txt
 
       - name: Run training job
         run: |
-          python train.py 2> error_logs.txt
+          python train_mlflow.py 2> error_logs.txt
 
       - name: Upload error logs artifact on failure
         if: failure()
