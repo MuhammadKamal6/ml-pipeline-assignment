@@ -1,0 +1,42 @@
+name: CI Workflow
+
+on:
+  push:
+    branches-ignore:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.9"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Test Python
+        run: python -c "import torch; print('OK')"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: README
+          path: README.md
+    -
+
+
+
+
+      ###
+      # 1- needs used when do a more than one job to make the jobs dont run in the same tim or parallel and make it the second job do not run untill the first one is done
+
+
+
+      # 2-  it can run in parallel if don't use needs for the jobs or if the jobs dont depend on another job 
